@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
 
   validates :name, :presence => {:message => "Názov kategórie nesmie byť prázdny."}
 
-  has_ancestry
+  has_ancestry :orphan_strategy => :destroy
 
   def self.search(search)
     if search
