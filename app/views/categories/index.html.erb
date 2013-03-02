@@ -1,3 +1,13 @@
 <h1>Kategórie</h1>
 
-<%= nested_categories @categories.arrange %>
+<%= form_tag root_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Filtrovať", :name => nil %>
+  </p>
+<% end %>
+<% if @categories.empty? %>
+    Pre hľadaný výraz "<%= params[:search] %>" neboli nájdené žiadne výsledky.
+<% else %>
+    <%= nested_categories(@categories.arrange, params[:search]) %>
+<% end %>

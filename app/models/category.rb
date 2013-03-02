@@ -5,4 +5,13 @@ class Category < ActiveRecord::Base
   validates :name, :presence => {:message => "Názov kategórie nesmie byť prázdny."}
 
   has_ancestry
+
+  def self.search(search)
+    if search
+      #TODO find path to root elements
+      where('name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
 end
