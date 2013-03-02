@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all
+    @categories = Category.scoped
 
     respond_to do |format|
       format.html #index.html.erb
