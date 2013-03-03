@@ -6,10 +6,12 @@ class Category < ActiveRecord::Base
 
   has_ancestry :orphan_strategy => :destroy
 
+  scope :with_name, lambda { |name| {:conditions => ['name LIKE ?', "%#{name}%"]} }
+
   def self.search(search)
     if search
       #TODO find path to root elements
-      where('name LIKE ?', "%#{search}%")
+      @categories = Category.scoped.with_name(search)
     else
       scoped
     end
