@@ -9,7 +9,7 @@ describe "Categories" do
   end
 
   describe "GET /categories" do
-    it "display categories list" do
+    it "displays categories list" do
       visit root_path
       page.should have_content("Topanky")
       page.should have_content("Oblecenie")
@@ -29,11 +29,11 @@ describe "Categories" do
   end
 
   describe "GET /categories" do
-    it "displays notice for no record when searching nonexistent category" do
+    it "displays notice for no record, when searching nonexistent category" do
       visit root_path
-      fill_in "search", :with => "fdgdhdshydt"
+      fill_in "search", :with => "Tricka"
       click_button "Filtrovať"
-      page.should have_content("Pre hľadaný výraz \"fdgdhdshydt\" neboli nájdené žiadne výsledky.")
+      page.should have_content("Pre hľadaný výraz \"Tricka\" neboli nájdené žiadne výsledky.")
     end
   end
 end
