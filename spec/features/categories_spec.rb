@@ -29,6 +29,27 @@ describe "Categories" do
   end
 
   describe "GET /categories" do
+    it "displays search category with parent" do
+      visit root_path
+      fill_in "search", :with => "Nohavice"
+      click_button "Filtrovať"
+      #save_and_open_page
+      page.should have_content("Nohavice")
+      page.should have_content("Oblecenie")
+      page.should_not have_content("Topanky")
+    end
+  end
+
+  describe "GET /categories" do
+    it "displays results with correct hierarchy" do
+      visit root_path
+      fill_in "search", :with => "ce"
+      click_button "Filtrovať"
+      page.should have_xpath("//div[@class='nested_categories']", :text => "Nohavice")
+    end
+  end
+
+  describe "GET /categories" do
     it "displays notice for no record, when searching nonexistent category" do
       visit root_path
       fill_in "search", :with => "Tricka"
