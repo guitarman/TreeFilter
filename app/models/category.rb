@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
   def self.search(search)
     if search
       #TODO find path to root elements
-      @categories = Category.scoped.with_name(search)
+      @categories = Category.with_name(search)
     else
       scoped
     end
