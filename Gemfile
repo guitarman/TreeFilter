@@ -18,3 +18,9 @@ end
 
 gem 'jquery-rails'
 gem 'ancestry'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'launchy'
+end
