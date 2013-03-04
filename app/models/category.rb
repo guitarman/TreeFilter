@@ -9,11 +9,11 @@ class Category < ActiveRecord::Base
   scope :with_name, lambda { |name| {:conditions => ['name LIKE ?', "%#{name}%"]} }
 
   def self.search(search)
-    if search
+    if search.blank?
+      scoped
+    else
       #TODO find path to root elements
       @categories = Category.with_name(search)
-    else
-      scoped
     end
   end
 end
