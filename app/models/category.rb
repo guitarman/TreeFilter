@@ -13,7 +13,6 @@ class Category < ActiveRecord::Base
     if search.blank?
       scoped
     else
-      #TODO join @categories and @parents
       @categories = Category.with_name(search)
 
       parents_ids = []
@@ -27,14 +26,11 @@ class Category < ActiveRecord::Base
       end
 
       if parents_ids.any?
+        parents_ids += children_ids
         #make parent_ids unique
         parents_ids.uniq!
-        #delete parents, which were already found via search parameter
-        parents_ids = parents_ids - children_ids
-        #select all unique missing parents
-        @parents = Category.with_ids(parents_ids)
-
-        #join @parents and @categories
+        #select all unique missing parents + all needed children
+        @categories = Category.with_ids(parents_ids)
       end
 
       @categories
