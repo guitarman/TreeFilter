@@ -13,27 +13,29 @@ class Category < ActiveRecord::Base
     if search.blank?
       scoped
     else
-      @categories = Category.with_name(search)
+      @categories = with_ids(with_name(search).map(&:path_ids).flatten)
 
-      parents_ids = []
-      children_ids = []
-
-      #find all parents ids and children ids
-      @categories.each do |category|
-        ancestry = category.ancestry
-        parents_ids += ancestry.split("/") unless ancestry.nil?
-        children_ids << category.id.to_s
-      end
-
-      if parents_ids.any?
-        parents_ids += children_ids
-        #make parent_ids unique
-        parents_ids.uniq!
-        #select all unique missing parents + all needed children
-        @categories = Category.with_ids(parents_ids)
-      end
-
-      @categories
+      #@categories = Category.with_name(search)
+      #
+      #parents_ids = []
+      #children_ids = []
+      #
+      ##find all parents ids and children ids
+      #@categories.each do |category|
+      #  ancestry = category.ancestry
+      #  parents_ids += ancestry.split("/") unless ancestry.nil?
+      #  children_ids << category.id.to_s
+      #end
+      #
+      #if parents_ids.any?
+      #  parents_ids += children_ids
+      #  #make parent_ids unique
+      #  parents_ids.uniq!
+      #  #select all unique missing parents + all needed children
+      #  @categories = Category.with_ids(parents_ids)
+      #end
+      #
+      #@categories
     end
   end
 end
